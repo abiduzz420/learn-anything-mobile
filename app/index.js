@@ -33,39 +33,16 @@ export default class App extends Component {
             ]}
           />
           <ResourcesCard
-            title="Basics"
+            title="Help"
             nodes={[
               'So you to learn Physics',
               'Resource guide to theoretical Physics',
-              'Why cant Elephants jump',
-              'The character of Physical Law',
-              'Theory of Relativity',
-              'The Feyman Lectures on Physics',
-              'Crash course Physics',
-              'AP Physics essentials',
-              'The astonishing simplicity of everything',
-              'Map of Physics',
-              'Theory of Relativity',
-              'The Feyman Lectures on Physics',
-              'Crash course Physics',
-              'AP Physics essentials',
-              'The astonishing simplicity of everything',
-              'Map of Physics'
+              'Why cant Elephants jump'
             ]}
           />
           <ResourcesCard
-            title="Basics"
+            title="Interesting"
             nodes={[
-              'So you to learn Physics',
-              'Resource guide to theoretical Physics',
-              'Why cant Elephants jump',
-              'The character of Physical Law',
-              'Theory of Relativity',
-              'The Feyman Lectures on Physics',
-              'Crash course Physics',
-              'AP Physics essentials',
-              'The astonishing simplicity of everything',
-              'Map of Physics',
               'Theory of Relativity',
               'The Feyman Lectures on Physics',
               'Crash course Physics',
