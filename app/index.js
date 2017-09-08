@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 
+import SearchBox from './components/SearchBox.js'
 import ResourcesCard from './components/ResourcesCard.js'
 
 export default class App extends Component {
@@ -10,6 +11,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#000' }}>
+        <SearchBox />
         <ScrollView horizontal>
           <ResourcesCard
             title="Basics"

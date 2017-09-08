@@ -1,35 +1,38 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import {
+  View,
+  Text,
+  Icon,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity
+} from 'react-native'
+import { Card, ListItem } from 'react-native-elements'
+
+class ResourceItem extends Component {
+  render() {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <TouchableOpacity>
+          <Text style={styles.resourceItem}>{this.props.item}</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+}
 
 class ResourcesCard extends Component {
   render() {
-    console.log(this.props)
     return (
-      <View style={styles.card}>
-        <View style={styles.resourceHeader}>
-          <Text style={styles.resourceTitle}>{this.props.title}</Text>
-          <Text style={styles.articleCount}>
-            {this.props.nodes.length} articles
-          </Text>
-        </View>
-        <View
-          style={{
-            borderBottomColor: '#E0E0E0',
-            borderBottomWidth: 2
-          }}
-        />
+      <Card title={this.props.title} style={styles.card}>
         <ScrollView>
-          <View style={styles.resourceItem}>
-            {this.props.nodes.map((node, i) => {
-              return (
-                <Text style={styles.resourceItem} key={i}>
-                  {node}
-                </Text>
-              )
-            })}
+          <View>
+            {this.props.nodes.map((node, i) => (
+              <ResourceItem key={i} item={node} />
+            ))}
           </View>
         </ScrollView>
-      </View>
+      </Card>
     )
   }
 }
@@ -45,24 +48,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 8
   },
-  resourceHeader: {
-    padding: 5,
-    flexDirection: 'row'
-  },
-  resourceTitle: {
-    flex: 1,
-    fontSize: 20,
-    color: '#000',
-    fontWeight: 'bold'
-  },
   articleCount: {
     fontSize: 15
   },
   resourceItem: {
     fontSize: 15,
-    marginTop: 5,
     padding: 8,
-    color: '#000'
+    color: '#000',
+    backgroundColor: '#F5F5F5',
+    margin: 5,
+    elevation: 1,
+    borderRadius: 5
   }
 })
 
