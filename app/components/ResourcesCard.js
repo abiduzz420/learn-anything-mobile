@@ -1,39 +1,52 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   View,
   Text,
-  Icon,
   StyleSheet,
   ScrollView,
   TouchableOpacity
-} from 'react-native'
-import { Card, ListItem } from 'react-native-elements'
+} from 'react-native';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class ResourceItem extends Component {
   render() {
     return (
-      <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity>
-          <Text style={styles.resourceItem}>{this.props.item}</Text>
-        </TouchableOpacity>
-      </View>
-    )
+      <TouchableOpacity>
+        <View style={{ flexDirection: 'row', marginTop: 20 }}>
+          <Icon name={this.props.icon} size={20} color="#000" />
+          <Text style={styles.resourceItem}>{this.props.text}</Text>
+        </View>
+      </TouchableOpacity>
+    );
   }
 }
 
 class ResourcesCard extends Component {
   render() {
     return (
-      <Card title={this.props.title} style={styles.card}>
+      <View style={styles.card}>
+        <View style={styles.resourceHeader}>
+          <Text style={styles.resourceTitle}>{this.props.title}</Text>
+          <Text style={styles.articleCount}>
+            {this.props.nodes.length} articles
+          </Text>
+        </View>
+        <View
+          style={{
+            borderBottomColor: '#E0E0E0',
+            borderBottomWidth: 2
+          }}
+        />
         <ScrollView>
           <View>
             {this.props.nodes.map((node, i) => (
-              <ResourceItem key={i} item={node} />
+              <ResourceItem key={i} icon={node.icon} text={node.text} />
             ))}
           </View>
         </ScrollView>
-      </Card>
-    )
+      </View>
+    );
   }
 }
 
@@ -46,20 +59,27 @@ const styles = StyleSheet.create({
     width: 330,
     padding: 10,
     backgroundColor: '#ffffff',
-    borderRadius: 8
+    borderRadius: 8,
+    fontSize: 30
+  },
+  resourceHeader: {
+    padding: 5,
+    flexDirection: 'row'
+  },
+  resourceTitle: {
+    flex: 1,
+    fontSize: 20,
+    color: '#000',
+    fontWeight: 'bold'
   },
   articleCount: {
     fontSize: 15
   },
   resourceItem: {
     fontSize: 15,
-    padding: 8,
     color: '#000',
-    backgroundColor: '#F5F5F5',
-    margin: 5,
-    elevation: 1,
-    borderRadius: 5
+    marginLeft: 5
   }
-})
+});
 
-export default ResourcesCard
+export default ResourcesCard;
