@@ -59,8 +59,7 @@ const styles = StyleSheet.create({
     width: 330,
     padding: 10,
     backgroundColor: '#ffffff',
-    borderRadius: 8,
-    fontSize: 30
+    borderRadius: 8
   },
   resourceHeader: {
     padding: 5,

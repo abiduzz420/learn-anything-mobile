@@ -1,14 +1,21 @@
-import React, { Component } from 'react'
-import { View, TextInput } from 'react-native'
-import { SearchBar } from 'react-native-elements'
+import React, { Component } from 'react';
+import { View, TextInput } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 
 class SearchBox extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       query: ''
-    }
+    };
   }
+
+  onInputChange = value => {
+    this.setState({
+      query: value
+    });
+    this.props.onFetchSuggestions(value);
+  };
   render() {
     return (
       <View>
@@ -16,13 +23,10 @@ class SearchBox extends Component {
           placeholder="Start new Search"
           clearIcon
           value={this.state.query}
-          onChangeText={query => this.setState({ query })}
+          onChangeText={this.onInputChange}
           containerStyle={{
             backgroundColor: '#ffffff',
-            borderRadius: 5,
-            marginLeft: 15,
-            marginRight: 15,
-            marginTop: 10
+            borderRadius: 5
           }}
           inputStyle={{
             color: '#000',
@@ -32,8 +36,8 @@ class SearchBox extends Component {
           }}
         />
       </View>
-    )
+    );
   }
 }
 
-export default SearchBox
+export default SearchBox;
