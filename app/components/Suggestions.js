@@ -4,7 +4,18 @@ import { ScrollView, TouchableOpacity, Text, View } from 'react-native';
 const Suggestions = ({ suggestionsList }) => {
   if (suggestionsList.length === 0) return null;
   return (
-    <View style={{ backgroundColor: '#ffffff', borderRadius: 4, height: 240 }}>
+    <View
+      style={{
+        backgroundColor: '#ffffff',
+        borderRadius: 4,
+        height: 240,
+        width: '100%',
+        top: 50,
+        position: 'absolute',
+        zIndex: 10000,
+        elevation: 5
+      }}
+    >
       <ScrollView>
         {suggestionsList.map(suggestion => {
           return (

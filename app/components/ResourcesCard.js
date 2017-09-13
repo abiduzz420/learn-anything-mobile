@@ -52,14 +52,13 @@ class ResourcesCard extends Component {
 
 const styles = StyleSheet.create({
   card: {
-    marginLeft: 15,
-    marginRight: 15,
     marginTop: 15,
     marginBottom: 15,
     width: 330,
     padding: 10,
     backgroundColor: '#ffffff',
-    borderRadius: 8
+    borderRadius: 8,
+    zIndex: 50
   },
   resourceHeader: {
     padding: 5,
