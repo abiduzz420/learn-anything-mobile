@@ -45,12 +45,12 @@ export default class ResultScreen extends Component {
     this.setState({ visible: true });
   };
   setResourceState = data => {
-    this.setState({ resources: data });
+    this.setState({ resources: data.nodes });
   };
   render() {
     console.log('suggestionsList', this.state.suggestionsList);
     console.log('resources:', this.state.resources);
-    const fetchSuggestions = _.debounce(this.fetchSuggestions, 200);
+    const fetchSuggestions = _.debounce(this.fetchSuggestions, 500);
     return (
       <View
         style={{
@@ -73,9 +73,12 @@ export default class ResultScreen extends Component {
           />
         ) : null}
         <ScrollView horizontal>
-          {this.state.resources.nodes.map((res, i) => {
-            return <ResourcesCard key={i} title={res.text} nodes={res.nodes} />;
-          })}
+          {this.state.resources.length > 0 ? (
+            this.state.resources.map((res, i) => {
+              return <ResourcesCard key={i} data={res} />;
+            })
+          ) : null}
+          {/*<RelatedResources />*/}
         </ScrollView>
       </View>
     );
