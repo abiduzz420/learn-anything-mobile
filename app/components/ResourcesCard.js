@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  ToastAndroid,
   TouchableOpacity,
   Linking
 } from 'react-native';
@@ -35,8 +36,10 @@ class ResourceItem extends Component {
         onPress={
           this.props.category === 'mindmap' ? (
             () => this.props.onClickNode(this.props.url)
-          ) : (
+          ) : this.props.url.length !== 0 ? (
             () => Linking.openURL(this.props.url)
+          ) : (
+            () => ToastAndroid.show('No Link', ToastAndroid.SHORT)
           )
         }
       >
@@ -57,8 +60,8 @@ class ResourceItem extends Component {
 
 class ResourcesCard extends Component {
   render() {
-    const { nodes, text, url } = this.props.data;
-    if (nodes.length !== 0) {
+    const { text, url } = this.props.data;
+    if (this.props.data.nodes.length > 0 && this.props.data.nodes) {
       return (
         <View style={styles.card}>
           <ResourceHeader {...this.props.data} />
@@ -70,7 +73,7 @@ class ResourcesCard extends Component {
           />
           <ScrollView>
             <View>
-              {nodes.map((node, i) => (
+              {this.props.data.nodes.map((node, i) => (
                 <ResourceItem
                   onClickNode={this.props.onClickNode}
                   category={node.category}
@@ -83,14 +86,52 @@ class ResourcesCard extends Component {
           </ScrollView>
         </View>
       );
-    } else return null;
+    } else return <View />;
   }
 }
+
+export const RelatedResources = props => {
+  if (props.data.length !== 0) {
+    return (
+      <View style={styles.card}>
+        <ResourceHeader nodes={props.data} url="" text={props.text} />
+        <View
+          style={{
+            borderBottomColor: '#E0E0E0',
+            borderBottomWidth: 2
+          }}
+        />
+        <ScrollView>
+          <View>
+            {props.data.map((node, i) => (
+              <ResourceItem
+                onClickNode={props.onClickNode}
+                category={node.category}
+                url={node.url}
+                key={i}
+                text={node.text}
+              />
+            ))}
+          </View>
+        </ScrollView>
+      </View>
+    );
+  } else return null;
+};
 
 const ResourceHeader = ({ url, text, nodes }) => {
   return (
     <View style={styles.resourceHeader}>
-      <Text onPress={() => Linking.openURL(url)} style={styles.resourceTitle}>
+      <Text
+        onPress={
+          url.length !== 0 ? (
+            () => Linking.openURL(this.props.url)
+          ) : (
+            () => ToastAndroid.show('No Link', ToastAndroid.SHORT)
+          )
+        }
+        style={styles.resourceTitle}
+      >
         {text}
       </Text>
       <Text style={styles.articleCount}>

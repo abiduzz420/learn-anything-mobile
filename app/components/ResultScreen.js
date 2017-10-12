@@ -4,7 +4,7 @@ import axios from 'axios';
 import _ from 'lodash';
 
 import SearchBox from './SearchBox.js';
-import ResourcesCard from './ResourcesCard.js';
+import ResourcesCard, { RelatedResources } from './ResourcesCard.js';
 import Suggestions from './Suggestions.js';
 
 const BASE_URL = `https://learn-anything.xyz/api`;
@@ -50,9 +50,11 @@ export default class ResultScreen extends Component {
     console.log('urls', url);
     axios
       .get(`${BASE_URL}/maps/${url}`)
-      .then(response => this.setResourceState(response.data));
+      .then(response => this.setState({ resources: response.data.nodes }));
   };
   render() {
+    const nodeResources = [];
+    console.log('nodeResources', nodeResources);
     console.log('suggestionsList', this.state.suggestionsList);
     console.log('resources:', this.state.resources);
     return (
@@ -76,19 +78,28 @@ export default class ResultScreen extends Component {
             suggestionsList={this.state.suggestionsList}
           />
         ) : null}
-        <ScrollView ref={ref => (this.scrollView = ref)} horizontal>
+        <ScrollView horizontal>
           {this.state.resources.length > 0 ? (
             this.state.resources.map((res, i) => {
+              if (res.nodes.length === 0) {
+                nodeResources.push(res);
+              }
               return (
                 <ResourcesCard
                   onClickNode={this.onClickNode}
                   key={i}
                   data={res}
+                  text={res.text}
                 />
               );
             })
           ) : null}
-          {/*<RelatedResources />*/}
+          <RelatedResources
+            url=""
+            text="Related resources"
+            data={nodeResources}
+            onClickNode={this.onClickNode}
+          />
         </ScrollView>
       </View>
     );
