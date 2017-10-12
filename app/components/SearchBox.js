@@ -14,6 +14,7 @@ class SearchBox extends Component {
     this.setState({
       query: value
     });
+    this.props.showSuggestions();
     this.props.onFetchSuggestions(value);
   };
   render() {

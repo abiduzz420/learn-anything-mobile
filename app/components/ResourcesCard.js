@@ -14,7 +14,7 @@ class ResourceItem extends Component {
     return (
       <TouchableOpacity>
         <View style={{ flexDirection: 'row', marginTop: 20 }}>
-          <Icon name={this.props.icon} size={20} color="#000" />
+          <Icon name="edit" size={20} color="#000" />
           <Text style={styles.resourceItem}>{this.props.text}</Text>
         </View>
       </TouchableOpacity>
@@ -24,29 +24,31 @@ class ResourceItem extends Component {
 
 class ResourcesCard extends Component {
   render() {
-    return (
-      <View style={styles.card}>
-        <View style={styles.resourceHeader}>
-          <Text style={styles.resourceTitle}>{this.props.title}</Text>
-          <Text style={styles.articleCount}>
-            {this.props.nodes.length} articles
-          </Text>
-        </View>
-        <View
-          style={{
-            borderBottomColor: '#E0E0E0',
-            borderBottomWidth: 2
-          }}
-        />
-        <ScrollView>
-          <View>
-            {this.props.nodes.map((node, i) => (
-              <ResourceItem key={i} icon={node.icon} text={node.text} />
-            ))}
+    if (this.props.nodes.length !== 0) {
+      return (
+        <View style={styles.card}>
+          <View style={styles.resourceHeader}>
+            <Text style={styles.resourceTitle}>{this.props.title}</Text>
+            <Text style={styles.articleCount}>
+              {this.props.nodes.length} articles
+            </Text>
           </View>
-        </ScrollView>
-      </View>
-    );
+          <View
+            style={{
+              borderBottomColor: '#E0E0E0',
+              borderBottomWidth: 2
+            }}
+          />
+          <ScrollView>
+            <View>
+              {this.props.nodes.map((node, i) => (
+                <ResourceItem url={node.url} key={i} text={node.text} />
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      );
+    } else return null;
   }
 }
 
