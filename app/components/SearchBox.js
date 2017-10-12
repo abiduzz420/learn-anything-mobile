@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
 import { SearchBar } from 'react-native-elements';
+import _ from 'lodash';
 
 class SearchBox extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class SearchBox extends Component {
       query: value
     });
     this.props.showSuggestions();
-    this.props.onFetchSuggestions(value);
+    const fetchSuggestions = _.debounce(this.props.onFetchSuggestions, 1000);
+    fetchSuggestions();
   };
   render() {
     return (

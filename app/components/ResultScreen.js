@@ -46,9 +46,8 @@ export default class ResultScreen extends Component {
     this.setState({ resources: data.nodes });
   };
   render() {
-    // console.log('suggestionsList', this.state.suggestionsList);
-    // console.log('resources:', this.state.resources);
-    const fetchSuggestions = _.debounce(this.fetchSuggestions, 500);
+    console.log('suggestionsList', this.state.suggestionsList);
+    console.log('resources:', this.state.resources);
     return (
       <View
         style={{
@@ -61,7 +60,7 @@ export default class ResultScreen extends Component {
       >
         <SearchBox
           showSuggestions={this.showSuggestions}
-          onFetchSuggestions={fetchSuggestions}
+          onFetchSuggestions={this.fetchSuggestions}
         />
         {this.state.visible ? (
           <Suggestions
