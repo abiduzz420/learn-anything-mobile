@@ -14,7 +14,7 @@ class ResourceItem extends Component {
   render() {
     const iconName =
       this.props.category === 'wiki'
-        ? 'wikipedia'
+        ? 'wikipedia-w'
         : this.props.category === 'video'
           ? 'play'
           : this.props.category === 'reddit'
@@ -31,7 +31,15 @@ class ResourceItem extends Component {
                       ? 'sitemap'
                       : 'comment-o';
     return (
-      <TouchableOpacity onPress={() => Linking.openURL(this.props.url)}>
+      <TouchableOpacity
+        onPress={
+          this.props.category === 'mindmap' ? (
+            () => this.props.onClickNode(this.props.url)
+          ) : (
+            () => Linking.openURL(this.props.url)
+          )
+        }
+      >
         <View style={{ flexDirection: 'row', marginTop: 20 }}>
           <Icon name={iconName} size={20} color="#000" />
           <Text style={styles.resourceItem}>
@@ -64,6 +72,7 @@ class ResourcesCard extends Component {
             <View>
               {nodes.map((node, i) => (
                 <ResourceItem
+                  onClickNode={this.props.onClickNode}
                   category={node.category}
                   url={node.url}
                   key={i}

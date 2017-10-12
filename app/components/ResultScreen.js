@@ -43,7 +43,14 @@ export default class ResultScreen extends Component {
     this.setState({ visible: true });
   };
   setResourceState = data => {
+    console.log('full resource:', data);
     this.setState({ resources: data.nodes });
+  };
+  onClickNode = url => {
+    console.log('urls', url);
+    axios
+      .get(`${BASE_URL}/maps/${url}`)
+      .then(response => this.setResourceState(response.data));
   };
   render() {
     console.log('suggestionsList', this.state.suggestionsList);
@@ -69,10 +76,16 @@ export default class ResultScreen extends Component {
             suggestionsList={this.state.suggestionsList}
           />
         ) : null}
-        <ScrollView horizontal>
+        <ScrollView ref={ref => (this.scrollView = ref)} horizontal>
           {this.state.resources.length > 0 ? (
             this.state.resources.map((res, i) => {
-              return <ResourcesCard key={i} data={res} />;
+              return (
+                <ResourcesCard
+                  onClickNode={this.onClickNode}
+                  key={i}
+                  data={res}
+                />
+              );
             })
           ) : null}
           {/*<RelatedResources />*/}
