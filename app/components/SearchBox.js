@@ -9,6 +9,7 @@ class SearchBox extends Component {
     this.state = {
       query: ''
     };
+    this.fetchSuggestions = _.debounce(props.onFetchSuggestions, 500);
   }
 
   onInputChange = value => {
@@ -16,8 +17,7 @@ class SearchBox extends Component {
       query: value
     });
     this.props.showSuggestions();
-    const fetchSuggestions = _.debounce(this.props.onFetchSuggestions, 1000);
-    fetchSuggestions();
+    this.fetchSuggestions(value);
   };
   render() {
     return (
