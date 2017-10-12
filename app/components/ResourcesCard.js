@@ -49,23 +49,11 @@ class ResourceItem extends Component {
 
 class ResourcesCard extends Component {
   render() {
-    if (this.props.data.nodes.length !== 0) {
+    const { nodes, text, url } = this.props.data;
+    if (nodes.length !== 0) {
       return (
         <View style={styles.card}>
-          <View style={styles.resourceHeader}>
-            <Text
-              onPress={() => Linking.openURL(this.props.data.url)}
-              style={styles.resourceTitle}
-            >
-              {this.props.data.text}
-            </Text>
-            <Text style={styles.articleCount}>
-              {`${this.props.data.nodes.length} ${this.props.data.nodes
-                .length === 1
-                ? 'resource'
-                : 'resources'}`}
-            </Text>
-          </View>
+          <ResourceHeader {...this.props.data} />
           <View
             style={{
               borderBottomColor: '#E0E0E0',
@@ -74,7 +62,7 @@ class ResourcesCard extends Component {
           />
           <ScrollView>
             <View>
-              {this.props.data.nodes.map((node, i) => (
+              {nodes.map((node, i) => (
                 <ResourceItem
                   category={node.category}
                   url={node.url}
@@ -89,6 +77,19 @@ class ResourcesCard extends Component {
     } else return null;
   }
 }
+
+const ResourceHeader = ({ url, text, nodes }) => {
+  return (
+    <View style={styles.resourceHeader}>
+      <Text onPress={() => Linking.openURL(url)} style={styles.resourceTitle}>
+        {text}
+      </Text>
+      <Text style={styles.articleCount}>
+        {`${nodes.length} ${nodes.length === 1 ? 'resource' : 'resources'}`}
+      </Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   card: {
