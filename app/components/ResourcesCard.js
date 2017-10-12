@@ -49,9 +49,7 @@ class ResourceItem extends Component {
 
 class ResourcesCard extends Component {
   render() {
-    console.log('hello');
     if (this.props.data.nodes.length !== 0) {
-      console.log('showiign rewsources card');
       return (
         <View style={styles.card}>
           <View style={styles.resourceHeader}>

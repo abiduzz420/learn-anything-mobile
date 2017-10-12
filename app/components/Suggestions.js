@@ -7,7 +7,6 @@ const BASE_URL = `https://learn-anything.xyz/api`;
 
 class Suggestions extends Component {
   selectSubject = id => {
-    console.log('Clicked on ', id);
     const FETCH_MAP = `${BASE_URL}/maps/${id}`;
     axios
       .get(FETCH_MAP)

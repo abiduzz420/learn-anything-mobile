@@ -19,9 +19,7 @@ export default class ResultScreen extends Component {
     };
   }
   fetchSuggestions = value => {
-    console.log('fetching suggestions');
     const query = value.trim();
-    console.log(query);
     if (query !== '' && query !== ' ') {
       axios
         .get(`${BASE_URL}/maps?q=${query}`)
@@ -48,8 +46,8 @@ export default class ResultScreen extends Component {
     this.setState({ resources: data.nodes });
   };
   render() {
-    console.log('suggestionsList', this.state.suggestionsList);
-    console.log('resources:', this.state.resources);
+    // console.log('suggestionsList', this.state.suggestionsList);
+    // console.log('resources:', this.state.resources);
     const fetchSuggestions = _.debounce(this.fetchSuggestions, 500);
     return (
       <View
