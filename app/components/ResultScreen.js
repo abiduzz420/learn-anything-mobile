@@ -4,7 +4,7 @@ import axios from 'axios';
 import _ from 'lodash';
 
 import SearchBox from './SearchBox.js';
-import ResourcesCard from './ResourcesCard.js';
+import ResourcesCard, { RelatedResources } from './ResourcesCard.js';
 import Suggestions from './Suggestions.js';
 
 const BASE_URL = `https://learn-anything.xyz/api`;
@@ -15,7 +15,8 @@ export default class ResultScreen extends Component {
     this.state = {
       suggestionsList: [],
       visible: false,
-      resources: []
+      resources: [],
+      query: ''
     };
   }
   fetchSuggestions = value => {
@@ -36,6 +37,9 @@ export default class ResultScreen extends Component {
       this.setState({ suggestionsList: [] });
     }
   };
+  setInputText = query => {
+    this.setState({ query });
+  };
   onClickSuggest = () => {
     this.setState({ visible: false });
   };
@@ -43,12 +47,23 @@ export default class ResultScreen extends Component {
     this.setState({ visible: true });
   };
   setResourceState = data => {
-    this.setState({ resources: data.nodes });
+    console.log('full resource:', data);
+    this.setState({ resources: data.nodes, query: data.key });
+  };
+  onClickNode = url => {
+    console.log('urls', url);
+    axios.get(`${BASE_URL}/maps/${url}`).then(response =>
+      this.setState({
+        resources: response.data.nodes,
+        query: response.data.key
+      })
+    );
   };
   render() {
-    // console.log('suggestionsList', this.state.suggestionsList);
-    // console.log('resources:', this.state.resources);
-    const fetchSuggestions = _.debounce(this.fetchSuggestions, 500);
+    const nodeResources = [];
+    console.log('nodeResources', nodeResources);
+    console.log('suggestionsList', this.state.suggestionsList);
+    console.log('resources:', this.state.resources);
     return (
       <View
         style={{
@@ -60,8 +75,10 @@ export default class ResultScreen extends Component {
         }}
       >
         <SearchBox
+          setInputText={this.setInputText}
+          query={this.state.query}
           showSuggestions={this.showSuggestions}
-          onFetchSuggestions={fetchSuggestions}
+          onFetchSuggestions={this.fetchSuggestions}
         />
         {this.state.visible ? (
           <Suggestions
@@ -73,10 +90,25 @@ export default class ResultScreen extends Component {
         <ScrollView horizontal>
           {this.state.resources.length > 0 ? (
             this.state.resources.map((res, i) => {
-              return <ResourcesCard key={i} data={res} />;
+              if (res.nodes.length === 0) {
+                nodeResources.push(res);
+              }
+              return (
+                <ResourcesCard
+                  onClickNode={this.onClickNode}
+                  key={i}
+                  data={res}
+                  text={res.text}
+                />
+              );
             })
           ) : null}
-          {/*<RelatedResources />*/}
+          <RelatedResources
+            url=""
+            text="Related resources"
+            data={nodeResources}
+            onClickNode={this.onClickNode}
+          />
         </ScrollView>
       </View>
     );
