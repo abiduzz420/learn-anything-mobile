@@ -6,16 +6,11 @@ import _ from 'lodash';
 class SearchBox extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      query: ''
-    };
     this.fetchSuggestions = _.debounce(props.onFetchSuggestions, 500);
   }
 
   onInputChange = value => {
-    this.setState({
-      query: value
-    });
+    this.props.setInputText(value);
     this.props.showSuggestions();
     this.fetchSuggestions(value);
   };
@@ -25,7 +20,7 @@ class SearchBox extends Component {
         <SearchBar
           placeholder="Start new Search"
           clearIcon
-          value={this.state.query}
+          value={this.props.query}
           onChangeText={this.onInputChange}
           containerStyle={{
             backgroundColor: '#ffffff',

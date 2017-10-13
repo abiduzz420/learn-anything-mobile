@@ -15,7 +15,8 @@ export default class ResultScreen extends Component {
     this.state = {
       suggestionsList: [],
       visible: false,
-      resources: []
+      resources: [],
+      query: ''
     };
   }
   fetchSuggestions = value => {
@@ -36,6 +37,9 @@ export default class ResultScreen extends Component {
       this.setState({ suggestionsList: [] });
     }
   };
+  setInputText = query => {
+    this.setState({ query });
+  };
   onClickSuggest = () => {
     this.setState({ visible: false });
   };
@@ -44,13 +48,16 @@ export default class ResultScreen extends Component {
   };
   setResourceState = data => {
     console.log('full resource:', data);
-    this.setState({ resources: data.nodes });
+    this.setState({ resources: data.nodes, query: data.key });
   };
   onClickNode = url => {
     console.log('urls', url);
-    axios
-      .get(`${BASE_URL}/maps/${url}`)
-      .then(response => this.setState({ resources: response.data.nodes }));
+    axios.get(`${BASE_URL}/maps/${url}`).then(response =>
+      this.setState({
+        resources: response.data.nodes,
+        query: response.data.key
+      })
+    );
   };
   render() {
     const nodeResources = [];
@@ -68,6 +75,8 @@ export default class ResultScreen extends Component {
         }}
       >
         <SearchBox
+          setInputText={this.setInputText}
+          query={this.state.query}
           showSuggestions={this.showSuggestions}
           onFetchSuggestions={this.fetchSuggestions}
         />
