@@ -127,7 +127,7 @@ const ResourceHeader = ({ url, text, nodes }) => {
           url.length === 0 || url === undefined ? (
             () => ToastAndroid.show('No Link', ToastAndroid.SHORT)
           ) : (
-            () => Linking.openURL(this.props.url)
+            () => Linking.openURL(url)
           )
         }
         style={styles.resourceTitle}
