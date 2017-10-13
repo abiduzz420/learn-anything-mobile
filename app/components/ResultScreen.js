@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, ToastAndroid } from 'react-native';
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -51,13 +51,17 @@ export default class ResultScreen extends Component {
     this.setState({ resources: data.nodes, query: data.key });
   };
   onClickNode = url => {
+    console.log('updating', this.state.resources);
     console.log('urls', url);
-    axios.get(`${BASE_URL}/maps/${url}`).then(response =>
-      this.setState({
-        resources: response.data.nodes,
-        query: response.data.key
-      })
-    );
+    axios
+      .get(`${BASE_URL}/maps/${url}`)
+      .then(response =>
+        this.setState({
+          resources: response.data.nodes,
+          query: response.data.key
+        })
+      )
+      .catch(error => console.log(error));
   };
   render() {
     const nodeResources = [];

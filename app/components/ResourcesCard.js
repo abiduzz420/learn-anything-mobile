@@ -124,10 +124,10 @@ const ResourceHeader = ({ url, text, nodes }) => {
     <View style={styles.resourceHeader}>
       <Text
         onPress={
-          url.length !== 0 ? (
-            () => Linking.openURL(this.props.url)
-          ) : (
+          url.length === 0 || url === undefined ? (
             () => ToastAndroid.show('No Link', ToastAndroid.SHORT)
+          ) : (
+            () => Linking.openURL(this.props.url)
           )
         }
         style={styles.resourceTitle}
